@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Log in
+{% endblock %}
+
+{% block content %}
+<body class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Connexion</h2>
+            </div>
+            <form action="{% url 'login' %}" method="POST" class="space-y-6">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="text-red-500 text-xs italic">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="space-y-2">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input id="username" name="username" type="email" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                    {% if form.username.errors %}
+                        <p class="text-red-500 text-xs italic">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                    <input id="password" name="password" type="password" required class="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                    {% if form.password.errors %}
+                        <p class="text-red-500 text-xs italic">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="text-red-500 text-xs italic"> {{form.error}} </p>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-900">Se souvenir de moi</label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Mot de passe oublié ?</a>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 px-4 rounded-md transition-colors">Connexion</button>
+                <div class="text-center mt-4">
+                    <p class="text-sm text-gray-600">Vous n'avez pas de compte ?<a href="{% url 'register' %}" class="text-indigo-600 hover:text-indigo-500 ml-1"> Inscription</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

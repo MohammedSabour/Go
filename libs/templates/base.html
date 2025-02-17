@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Location de voitures entre particuliers" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/lucide-icons@0.294.0/font/lucide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Inclure Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Inclure Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.0/flowbite.min.css" rel="stylesheet">
+    <!-- Inclure Flowbite JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.0/flowbite.min.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <title>{% block title %}Go{% endblock %}</title>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                <a href="{% url "home" %}" class="text-2xl font-bold">Go</a>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:block px-4 py-2 text-sm font-medium border rounded-md hover:bg-gray-50">
+                        <a href="{% url "check_car" %}">Devenez hôte</a>
+                    </button>
+                    <div class="relative">
+                        <button class="p-2 hover:bg-gray-100 rounded-md" onclick="toggleDropdown()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                        </button>
+                        <div id="dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border">
+                            <div class="py-1">
+                                {% if request.user.is_authenticated %}
+                                    {% comment %} <a href="{% url "profile" %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a> {% endcomment %}
+                                    <a href="{% url "logout" %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Déconnexion</a>
+                                {% else %}
+                                    <a href="{% url "login" %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Connexion</a>
+                                    <a href="{% url "register" %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Inscription</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div>
+        {% block content %}
+
+        {% endblock  %}
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/map.js' %}"></script>
+</html>

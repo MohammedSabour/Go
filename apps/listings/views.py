@@ -58,7 +58,7 @@ def search_cars(request):
         ).prefetch_related('annonce__images')
 
         if not cars.exists():
-            context['error'] = "Aucune voiture trouvée pour cet emplacement et cette gamme de prix."
+            context['error'] = "Aucune voiture trouvée pour cet emplacement"
             return render(request, 'search_results.html', context)
 
         # Exclure les voitures déjà réservées
